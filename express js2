@@ -1,0 +1,29 @@
+npm install body-parser
+
+const express = require('express');
+const bodyParser = require('body-parser');
+
+const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.get('/add-product', (req, res) => {
+  res.send(`
+    <form method="POST" action="/product">
+      <input type="text" name="name" placeholder="Product Name" />
+      <input type="text" name="size" placeholder="Product Size" />
+      <button type="submit">Add Product</button>
+    </form>
+  `);
+});
+
+app.post('/product', (req, res) => {
+  const productName = req.body.name;
+  const productSize = req.body.size;
+  console.log('Product Name:', productName);
+  console.log('Product Size:', productSize);
+  res.redirect('/');
+});
+
+app.listen(3000, () => {
+  console.log('Server is listening on port 3000');
+});
